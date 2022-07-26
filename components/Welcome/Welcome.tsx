@@ -7,9 +7,9 @@ export function Welcome() {
   return (
     <>
       <Title className={classes.title} align="center" mt={100}>
-        Welcome to{' '}
+        Ticket{' '}
         <Text inherit variant="gradient" component="span">
-          Mantine
+          Distribution
         </Text>
       </Title>
       <Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">

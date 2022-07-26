@@ -33,6 +33,4 @@ yarn-error.log*
 # vercel
 .vercel
 *.tsbuildinfo
-
-# storybook
-storybook-static
+.env
