@@ -5,6 +5,7 @@ import { stringToColor } from 'utils/helper';
 import { getListTicketsRequest } from 'utils/request-api';
 import { ticketsByEpic } from 'components/SprintTicketReport/utils';
 import TicketStatusItem from 'components/SprintTicketReport/TicketStatusItem';
+import SprintPointProgress from 'components/SprintTicketReport/SprintPointProgress';
 
 export default function SprintTicketReport({ sprint }: { sprint: Sprint }) {
   const { data: tickets, isLoading } = useQuery(
@@ -51,6 +52,7 @@ export default function SprintTicketReport({ sprint }: { sprint: Sprint }) {
                 </Box>
 
                 <Stack spacing="xs">
+                  <SprintPointProgress sprint={sprint} tickets={byEpic[key]} />
                   {byEpic[key].map((ticket) => (
                     <TicketStatusItem key={ticket.id} ticket={ticket} />
                   ))}
