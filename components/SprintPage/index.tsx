@@ -16,7 +16,11 @@ export default function SprintPage() {
   const [saving, setSaving] = useState(false);
   const [editSprint, setEditSprint] = useState<Sprint | null>(null);
 
-  const { data: sprints, isLoading, refetch } = useQuery(['sprint'], () => getListSprintsRequest());
+  const {
+    data: sprints,
+    isLoading,
+    refetch,
+  } = useQuery(['sprints'], () => getListSprintsRequest());
 
   const deleteSprint = async (data) => {
     setSaving(true);
@@ -55,7 +59,7 @@ export default function SprintPage() {
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
-        title="New Sprint"
+        title={editSprint ? 'Edit Sprint' : 'New Sprint'}
         padding="xl"
         size="xl"
         position="right"

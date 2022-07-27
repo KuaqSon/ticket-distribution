@@ -96,32 +96,30 @@ export default function Header() {
 
   return (
     <MaintineHeader height={56} className={classes.header} mb={120}>
-      <Container>
-        <div className={classes.inner}>
-          <Link href="/">
-            <Anchor underline={false}>
-              <MainLogo />
-            </Anchor>
-          </Link>
+      <Box className={classes.inner}>
+        <Link href="/">
+          <Anchor underline={false}>
+            <MainLogo />
+          </Anchor>
+        </Link>
 
-          <Group spacing={5} className={classes.links}>
-            {loading ? (
-              <Loader />
-            ) : session ? (
-              <AuthorizedMenus session={session} />
-            ) : (
-              <UnAuthorizedMenus />
-            )}
-          </Group>
-          <Burger
-            opened={opened}
-            onClick={() => toggleOpened()}
-            className={classes.burger}
-            size="sm"
-            color="#fff"
-          />
-        </div>
-      </Container>
+        <Group spacing={5} className={classes.links}>
+          {loading ? (
+            <Loader />
+          ) : session ? (
+            <AuthorizedMenus session={session} />
+          ) : (
+            <UnAuthorizedMenus />
+          )}
+        </Group>
+        <Burger
+          opened={opened}
+          onClick={() => toggleOpened()}
+          className={classes.burger}
+          size="sm"
+          color="#fff"
+        />
+      </Box>
     </MaintineHeader>
   );
 }

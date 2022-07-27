@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Textarea } from '@mantine/core';
+import { Button, Group, NumberInput, Stack, Textarea } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/hooks';
 import { Sprint } from '@prisma/client';
@@ -10,6 +10,8 @@ const DEFAULT_SPRINT = {
   note: '',
   startAt: moment().toDate(),
   endAt: moment().add(7, 'days').toDate(),
+  hourPerPoint: 4,
+  formula: '{}',
 };
 
 export default function SprintForm({
@@ -24,12 +26,18 @@ export default function SprintForm({
   onDelete: (s: Sprint) => void;
 }): JSX.Element {
   const form = useForm({
-    initialValues: sprint || DEFAULT_SPRINT,
+    initialValues: sprint
+      ? { ...sprint, formula: JSON.stringify(sprint?.formula) }
+      : DEFAULT_SPRINT,
   });
 
   return (
     <>
-      <form onSubmit={form.onSubmit((values) => onSubmit(values as Sprint))}>
+      <form
+        onSubmit={form.onSubmit((values) =>
+          onSubmit({ ...values, formula: JSON.parse(values.formula) } as Sprint)
+        )}
+      >
         <Stack>
           <StyledInput required label="Name" {...form.getInputProps('name')} disabled={loading} />
 
@@ -55,6 +63,25 @@ export default function SprintForm({
           />
 
           <StyledInput
+            required
+            label="Hour Per Point"
+            component={NumberInput}
+            step={0.001}
+            min={0}
+            precision={3}
+            {...form.getInputProps('hourPerPoint')}
+            disabled={loading}
+          />
+
+          <StyledInput
+            required
+            label="Formula"
+            component={Textarea}
+            {...form.getInputProps('formula')}
+            disabled={loading}
+          />
+
+          <StyledInput
             label="Note"
             component={Textarea}
             {...form.getInputProps('note')}
@@ -65,9 +92,16 @@ export default function SprintForm({
             <Button type="submit" loading={loading}>
               Submit
             </Button>
-            <Button variant="light" color="red" loading={loading} onClick={() => onDelete(sprint)}>
-              Delete
-            </Button>
+            {sprint && sprint.id && (
+              <Button
+                variant="light"
+                color="red"
+                loading={loading}
+                onClick={() => onDelete(sprint)}
+              >
+                Delete
+              </Button>
+            )}
           </Group>
         </Stack>
       </form>

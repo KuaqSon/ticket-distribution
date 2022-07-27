@@ -22,6 +22,7 @@ model User {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   Sprint        Sprint[]
   Ticket        Ticket[]
+  Epic          Epic[]
 
   @@map(name: "users")
 }
@@ -62,32 +63,43 @@ model VerificationToken {
 }
 
 model Sprint {
-  id        String   @id @default(cuid())
-  userId    String
-  name      String
-  note      String?
-  fomula    Json     @default("{}")
-  startAt   DateTime
-  endAt     DateTime
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id           String   @id @default(cuid())
+  userId       String
+  name         String
+  note         String?
+  hourPerPoint Float    @default(0)
+  formula      Json     @default("{}")
+  startAt      DateTime
+  endAt        DateTime
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @updatedAt @map(name: "updated_at")
 
   user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   Ticket Ticket[]
 }
 
 model Ticket {
-  id         String @id @default(cuid())
+  id         String  @id @default(cuid())
   userId     String
   sprintId   String
   name       String
-  priority   Float  @default(0)
-  storyPoint Float  @default(0)
-  status     String @default("todo")
+  priority   Float   @default(0)
+  storyPoint Float   @default(0)
+  status     String  @default("todo")
+  epic       String?
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   sprint Sprint @relation(fields: [sprintId], references: [id], onDelete: Cascade)
+}
+
+model Epic {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

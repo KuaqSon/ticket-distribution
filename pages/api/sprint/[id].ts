@@ -2,7 +2,7 @@ import prisma from 'lib/prisma';
 
 export default async function handle(req, res) {
   const sprintId = req.query.id;
-  const { name, startAt, endAt, note } = req.body;
+  const { name, startAt, endAt, note, hourPerPoint, formula } = req.body;
 
   if (req.method === 'DELETE') {
     const post = await prisma.sprint.delete({
@@ -19,6 +19,8 @@ export default async function handle(req, res) {
         startAt,
         endAt,
         note,
+        hourPerPoint,
+        formula,
       },
     });
     return res.json(updateRecord);

@@ -10,23 +10,16 @@ export default async function handle(req, res) {
   }
 
   if (req.method === 'GET') {
-    const { sprintId } = req.query;
-    if (!sprintId) {
-      return [];
-    }
-
-    const result = await prisma.ticket.findMany({
+    const { q } = req.query;
+    const result = await prisma.epic.findMany({
       where: {
+        name: {
+          contains: q,
+          mode: 'insensitive',
+        },
         user: { email: session.user.email },
-        sprint: { id: sprintId },
       },
       orderBy: [
-        {
-          priority: 'desc',
-        },
-        {
-          storyPoint: 'asc',
-        },
         {
           createdAt: 'desc',
         },
@@ -36,15 +29,10 @@ export default async function handle(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { name, priority, storyPoint, status, epic, sprintId } = req.body;
-    const result = await prisma.ticket.create({
+    const { name } = req.body;
+    const result = await prisma.epic.create({
       data: {
         name,
-        priority,
-        storyPoint,
-        status,
-        epic,
-        sprint: { connect: { id: sprintId } },
         user: { connect: { email: session?.user?.email } },
       },
     });

@@ -1,8 +1,16 @@
-import { Box, Container, Stack } from '@mantine/core';
+import { Box, Center, Container, Loader, Stack } from '@mantine/core';
 import { Sprint } from '@prisma/client';
 import Header from 'components/Header';
 import prisma from 'lib/prisma';
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
+import TimeAgo from 'react-timeago';
+import { Suspense } from 'react';
+import { shortDateFormat } from 'utils/helper';
+
+const TicketManagement = dynamic(() => import('components/TicketManagement'), {
+  suspense: true,
+});
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const sprint = await prisma.sprint.findUnique({
@@ -21,19 +29,31 @@ export interface SprintManagementProps {
 }
 
 export default function SprintManagement({ sprint }: SprintManagementProps): JSX.Element {
-  console.log('🚀 ~ file: [id].tsx ~ line 8 ~ SprintDetailPage', sprint);
   return (
     <>
       <Header />
 
       <Container>
-        <h1>SprintManagement</h1>
-
         <Stack>
-          <Box>{sprint.name}</Box>
-          <Box>Start: {sprint.startAt}</Box>
-          <Box>End: {sprint.endAt}</Box>
+          <Box>
+            <Box>Manage</Box>
+            <Box sx={{ fontWeight: 'bold', fontSize: '2rem' }}>{sprint.name}</Box>
+          </Box>
+          <Box>{`${shortDateFormat(sprint.startAt)} - ${shortDateFormat(sprint.endAt)}`}</Box>
+          <Box>
+            Remaining: <TimeAgo date={sprint.endAt} />
+          </Box>
         </Stack>
+
+        <Suspense
+          fallback={
+            <Center>
+              <Loader />
+            </Center>
+          }
+        >
+          <TicketManagement sprint={sprint} />
+        </Suspense>
       </Container>
     </>
   );
