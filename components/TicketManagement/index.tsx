@@ -21,7 +21,7 @@ export default function TicketManagement({ sprint }: { sprint: Sprint }) {
     data: tickets,
     isLoading,
     refetch,
-  } = useQuery(['tickets'], () => getListTicketsRequest({ sprintId: sprint.id }));
+  } = useQuery(['tickets', sprint.id], () => getListTicketsRequest({ sprintId: sprint.id }));
 
   const newTicketMutation = useMutation((data) => createTicketRequest(data), {
     onMutate: () => {

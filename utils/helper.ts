@@ -1,3 +1,4 @@
+import { Ticket } from '@prisma/client';
 import moment from 'moment';
 import { SHORT_DATE_FORMAT } from 'utils/constants';
 
@@ -31,4 +32,21 @@ export const stringToColor = (str: string): string => {
     color += `00${value.toString(16)}`.substr(-2);
   }
   return color;
+};
+
+export const sortTickets = (tickets: Ticket[]): Ticket[] => {
+  const result: Ticket[] = [...tickets].sort((a, b) =>
+    a.priority === b.priority
+      ? a.storyPoint < b.storyPoint
+        ? -1
+        : a.storyPoint > b.storyPoint
+        ? 1
+        : 0
+      : a.priority < b.priority
+      ? 1
+      : a.priority > b.priority
+      ? -1
+      : 0
+  );
+  return result;
 };

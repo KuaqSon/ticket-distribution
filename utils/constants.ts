@@ -3,6 +3,7 @@ export const APP_NAME = 'ticket-distribution';
 export const requestHeaders = { 'Content-Type': 'application/json' };
 
 export const SHORT_DATE_FORMAT = 'll';
+export const DATE_KEY = 'YYYYMMDD';
 
 export const TICKET_PRIORITY = {
   LOWEST: 1,

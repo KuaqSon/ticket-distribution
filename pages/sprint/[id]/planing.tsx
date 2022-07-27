@@ -1,8 +1,16 @@
-import { Box, Container, Stack } from '@mantine/core';
+import { Box, Center, Container, Loader, Stack } from '@mantine/core';
 import { Sprint } from '@prisma/client';
 import Header from 'components/Header';
 import prisma from 'lib/prisma';
 import { GetServerSideProps } from 'next';
+import { shortDateFormat } from 'utils/helper';
+import TimeAgo from 'react-timeago';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+
+const SprintTicketPlan = dynamic(() => import('components/SprintTicketPlan'), {
+  suspense: true,
+});
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const sprint = await prisma.sprint.findUnique({
@@ -10,6 +18,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       id: String(params?.id),
     },
   });
+
+  if (!sprint) {
+    return { notFound: true };
+  }
 
   return {
     props: { sprint: JSON.parse(JSON.stringify(sprint)) },
@@ -21,19 +33,31 @@ export interface SprintPlaningProps {
 }
 
 export default function SprintPlaning({ sprint }: SprintPlaningProps): JSX.Element {
-  console.log('🚀 ~ file: [id].tsx ~ line 8 ~ SprintDetailPage', sprint);
   return (
     <>
       <Header />
 
-      <Container>
-        <h1>SprintPlaning</h1>
-
+      <Container py="lg">
         <Stack>
-          <Box>{sprint.name}</Box>
-          <Box>Start: {sprint.startAt}</Box>
-          <Box>End: {sprint.endAt}</Box>
+          <Box>
+            <Box>Planing</Box>
+            <Box sx={{ fontWeight: 'bold', fontSize: '2rem' }}>{sprint.name}</Box>
+          </Box>
+          <Box>{`${shortDateFormat(sprint.startAt)} - ${shortDateFormat(sprint.endAt)}`}</Box>
+          <Box>
+            Remaining: <TimeAgo date={sprint.endAt} />
+          </Box>
         </Stack>
+
+        <Suspense
+          fallback={
+            <Center>
+              <Loader />
+            </Center>
+          }
+        >
+          <SprintTicketPlan sprint={sprint} />
+        </Suspense>
       </Container>
     </>
   );

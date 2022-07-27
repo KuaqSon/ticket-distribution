@@ -38,7 +38,7 @@ export default function SprintContainer(): JSX.Element {
     <>
       <Header />
 
-      <Container>
+      <Container py="lg">
         <h1>SprintPage</h1>
 
         <Suspense

@@ -3,12 +3,12 @@ import { Sprint } from '@prisma/client';
 import Header from 'components/Header';
 import prisma from 'lib/prisma';
 import { GetServerSideProps } from 'next';
-import dynamic from 'next/dynamic';
+import { shortDateFormat } from 'utils/helper';
 import TimeAgo from 'react-timeago';
 import { Suspense } from 'react';
-import { shortDateFormat } from 'utils/helper';
+import dynamic from 'next/dynamic';
 
-const TicketManagement = dynamic(() => import('components/TicketManagement'), {
+const SprintTicketReport = dynamic(() => import('components/SprintTicketReport'), {
   suspense: true,
 });
 
@@ -28,11 +28,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-export interface SprintManagementProps {
+export interface SprintReportProps {
   sprint: Sprint;
 }
 
-export default function SprintManagement({ sprint }: SprintManagementProps): JSX.Element {
+export default function SprintReport({ sprint }: SprintReportProps): JSX.Element {
   return (
     <>
       <Header />
@@ -40,7 +40,7 @@ export default function SprintManagement({ sprint }: SprintManagementProps): JSX
       <Container py="lg">
         <Stack>
           <Box>
-            <Box>Manage</Box>
+            <Box>Report</Box>
             <Box sx={{ fontWeight: 'bold', fontSize: '2rem' }}>{sprint.name}</Box>
           </Box>
           <Box>{`${shortDateFormat(sprint.startAt)} - ${shortDateFormat(sprint.endAt)}`}</Box>
@@ -56,7 +56,7 @@ export default function SprintManagement({ sprint }: SprintManagementProps): JSX
             </Center>
           }
         >
-          <TicketManagement sprint={sprint} />
+          <SprintTicketReport sprint={sprint} />
         </Suspense>
       </Container>
     </>

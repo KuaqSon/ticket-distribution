@@ -33,6 +33,11 @@ export default function SprintItem({
               Planing
             </Button>
           </Link>
+          <Link href={`/sprint/${sprint.id}/report`}>
+            <Button variant="light" color="orange" compact>
+              Report
+            </Button>
+          </Link>
         </Group>
       </Group>
     </Paper>

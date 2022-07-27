@@ -1,7 +1,8 @@
-import { Badge, Box, Button, Group, MantineTheme, Paper, Stack } from '@mantine/core';
+import { Box, Button, Group, MantineTheme, Paper, Stack } from '@mantine/core';
 import { Ticket } from '@prisma/client';
-import { TICKET_PRIORITY, TICKET_STATUS } from 'utils/constants';
-import { getKeyByValue, stringToColor } from 'utils/helper';
+import TicketBadge from 'components/TicketBadge';
+import TicketPriorityStatus from 'components/TicketPriorityStatus';
+import { stringToColor } from 'utils/helper';
 
 export default function TicketItem({
   ticket,
@@ -10,16 +11,13 @@ export default function TicketItem({
   ticket: Ticket;
   onEdit?: (ticket: Ticket) => void;
 }) {
-  const priority = getKeyByValue(TICKET_PRIORITY, ticket.priority);
-
-  const status = getKeyByValue(TICKET_STATUS, ticket.status)?.split('_').join(' ');
-
   return (
     <Paper shadow="sm" p="sm">
       <Group noWrap>
-        <Stack sx={{ flex: 1 }} spacing={4}>
+        <Stack sx={{ flex: 1 }} spacing={6}>
           <Box sx={{ fontWeight: 'bold', fontSize: '18px' }}>{ticket.name}</Box>
-          <Box sx={{ fontSize: '10px' }}>{`${status} - ${ticket.storyPoint} - ${priority}`}</Box>
+          <TicketPriorityStatus priority={ticket.priority} />
+          <TicketBadge ticket={ticket} />
           {ticket.epic && (
             <Box>
               <Box
