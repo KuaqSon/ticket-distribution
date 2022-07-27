@@ -22,3 +22,14 @@ export const TICKET_STATUS = {
   STAGING: 'staging',
   DONE: 'done',
 };
+
+export const DEFAULT_SPRINT_FORMULA = {
+  TODO: 0,
+  BLOCKED: 0,
+  IN_PROGRESS: 30,
+  IN_REVIEW: 50,
+  READY_FOR_QA: 60,
+  IN_TEST: 70,
+  STAGING: 95,
+  DONE: 100,
+};

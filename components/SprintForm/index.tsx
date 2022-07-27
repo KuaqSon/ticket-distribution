@@ -4,6 +4,7 @@ import { useForm } from '@mantine/hooks';
 import { Sprint } from '@prisma/client';
 import StyledInput from 'components/Input/StyledInput';
 import moment from 'moment';
+import { DEFAULT_SPRINT_FORMULA } from 'utils/constants';
 
 const DEFAULT_SPRINT = {
   name: 'Sprint ',
@@ -11,7 +12,7 @@ const DEFAULT_SPRINT = {
   startAt: moment().toDate(),
   endAt: moment().add(7, 'days').toDate(),
   hourPerPoint: 4,
-  formula: '{}',
+  formula: JSON.stringify(DEFAULT_SPRINT_FORMULA),
 };
 
 export default function SprintForm({
