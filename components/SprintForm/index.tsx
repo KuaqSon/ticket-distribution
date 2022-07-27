@@ -85,6 +85,8 @@ export default function SprintForm({
           <StyledInput
             label="Note"
             component={Textarea}
+            minRows={2}
+            autosize
             {...form.getInputProps('note')}
             disabled={loading}
           />
