@@ -67,8 +67,8 @@ export default function SprintPage() {
         <SprintForm sprint={editSprint} onSubmit={saveSprint} onDelete={deleteSprint} />
       </Drawer>
 
-      <Stack>
-        <Group position="center">
+      <Stack py="lg">
+        <Group>
           <Button
             onClick={() => {
               setEditSprint(null);

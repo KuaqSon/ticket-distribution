@@ -81,8 +81,8 @@ export default function TicketManagement({ sprint }: { sprint: Sprint }) {
         />
       </Drawer>
 
-      <Stack>
-        <Group position="center">
+      <Stack py="lg">
+        <Group>
           <Button
             onClick={() => {
               setEditRecord(null);

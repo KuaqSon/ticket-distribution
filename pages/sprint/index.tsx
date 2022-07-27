@@ -1,4 +1,4 @@
-import { Container, Center, Loader } from '@mantine/core';
+import { Container, Center, Loader, Title } from '@mantine/core';
 import Header from 'components/Header';
 
 import dynamic from 'next/dynamic';
@@ -39,7 +39,7 @@ export default function SprintContainer(): JSX.Element {
       <Header />
 
       <Container py="lg">
-        <h1>SprintPage</h1>
+        <Title>Sprints Management</Title>
 
         <Suspense
           fallback={

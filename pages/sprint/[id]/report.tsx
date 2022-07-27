@@ -1,4 +1,4 @@
-import { Box, Center, Container, Loader, Stack } from '@mantine/core';
+import { Box, Center, Container, Loader, Stack, Title } from '@mantine/core';
 import { Sprint } from '@prisma/client';
 import Header from 'components/Header';
 import prisma from 'lib/prisma';
@@ -7,6 +7,7 @@ import { shortDateFormat } from 'utils/helper';
 import TimeAgo from 'react-timeago';
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import SprintNavigator from 'components/SprintNavigator';
 
 const SprintTicketReport = dynamic(() => import('components/SprintTicketReport'), {
   suspense: true,
@@ -41,12 +42,13 @@ export default function SprintReport({ sprint }: SprintReportProps): JSX.Element
         <Stack>
           <Box>
             <Box>Report</Box>
-            <Box sx={{ fontWeight: 'bold', fontSize: '2rem' }}>{sprint.name}</Box>
+            <Title>{sprint.name}</Title>
           </Box>
           <Box>{`${shortDateFormat(sprint.startAt)} - ${shortDateFormat(sprint.endAt)}`}</Box>
           <Box>
             Remaining: <TimeAgo date={sprint.endAt} />
           </Box>
+          <SprintNavigator sprint={sprint} />
         </Stack>
 
         <Suspense

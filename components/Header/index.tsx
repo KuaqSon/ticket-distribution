@@ -95,7 +95,7 @@ export default function Header() {
   const loading = status === 'loading';
 
   return (
-    <MaintineHeader height={56} className={classes.header} mb={120}>
+    <MaintineHeader height={56} className={classes.header} mb={40}>
       <Box className={classes.inner}>
         <Link href="/">
           <Anchor underline={false}>
