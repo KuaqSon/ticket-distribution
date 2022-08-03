@@ -67,8 +67,8 @@ export const slackUpMessage = (dailyTickets: any) => {
   const today = moment().format(DATE_KEY);
   const yesterday = moment().add(-1, 'days').format(DATE_KEY);
 
-  const todayTickets = dailyTickets[today] || ['...'];
-  const yesterdayTickets = dailyTickets[yesterday] || ['...'];
+  const todayTickets = dailyTickets[today] || [{ name: '...' }];
+  const yesterdayTickets = dailyTickets[yesterday] || [{ name: '...' }];
 
   return [
     ...['Yesterday:'].concat(yesterdayTickets.map((t) => `- ${t.name}`)),
