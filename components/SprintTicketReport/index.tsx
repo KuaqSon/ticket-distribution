@@ -62,18 +62,14 @@ const StatPaper = ({ label, value }) => (
 );
 
 export default function SprintTicketReport({ sprint }: { sprint: Sprint }) {
-  const { data: tickets, isLoading } = useQuery(
-    ['tickets', sprint.id],
-    () => getListTicketsRequest({ sprintId: sprint.id }),
-    {
-      initialData: [],
-    }
+  const { data: tickets, isLoading } = useQuery(['tickets', sprint.id], () =>
+    getListTicketsRequest({ sprintId: sprint.id })
   );
-  const byEpic = ticketsByEpic(tickets);
-  const progress = calculateSprintProgress(sprint, tickets);
-  const groupTicket = groupTicketByStatus(tickets);
+  const byEpic = ticketsByEpic(tickets || []);
+  const progress = calculateSprintProgress(sprint, tickets || []);
+  const groupTicket = groupTicketByStatus(tickets || []);
 
-  if (isLoading) {
+  if (isLoading || !tickets) {
     return <SprintSkeleton />;
   }
 

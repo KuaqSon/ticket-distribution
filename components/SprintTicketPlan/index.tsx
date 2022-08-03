@@ -17,13 +17,10 @@ export default function SprintTicketPlan({ sprint }: { sprint: Sprint }) {
 
   const { data: tickets, isLoading } = useQuery(
     ['tickets', sprint.id],
-    () => getListTicketsRequest({ sprintId: sprint.id }),
-    {
-      initialData: [],
-    }
+    () => getListTicketsRequest({ sprintId: sprint.id })
   );
 
-  const byDays = ticketsByDay(sprint, tickets);
+  const byDays = ticketsByDay(sprint, tickets || []);
 
   const slackMsg = slackUpMessage(byDays);
 
@@ -37,10 +34,8 @@ export default function SprintTicketPlan({ sprint }: { sprint: Sprint }) {
     };
   }, [copied]);
 
-  if (isLoading) {
-    return (
-      <SprintSkeleton />
-    );
+  if (isLoading || !tickets) {
+    return <SprintSkeleton />;
   }
 
   return (

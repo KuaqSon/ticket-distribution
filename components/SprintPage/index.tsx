@@ -3,6 +3,7 @@ import { Sprint } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import SprintForm from 'components/SprintForm';
 import SprintItem from 'components/SprintPage/SprintItem';
+import SprintSkeleton from 'components/SprintSkeleton';
 import { useState } from 'react';
 import {
   createSprintRequest,
@@ -80,22 +81,20 @@ export default function SprintPage() {
           </Button>
         </Group>
 
-        {isLoading && (
-          <Center>
-            <Loader size="lg" />
-          </Center>
-        )}
-
-        {sprints?.map((s) => (
-          <SprintItem
-            key={s.id}
-            sprint={s}
-            onEdit={() => {
-              setEditSprint(s);
-              setOpened(true);
-            }}
-          />
-        ))}
+        {isLoading ? (
+          <SprintSkeleton />
+        ) : sprints ? (
+          sprints?.map((s) => (
+            <SprintItem
+              key={s.id}
+              sprint={s}
+              onEdit={() => {
+                setEditSprint(s);
+                setOpened(true);
+              }}
+            />
+          ))
+        ) : null}
       </Stack>
     </>
   );
