@@ -10,9 +10,11 @@ import { useEffect, useState } from 'react';
 export default function SprintPointProgress({
   sprint,
   tickets,
+  epicName = null,
 }: {
   sprint: Sprint;
   tickets: Ticket[];
+  epicName?: string | null;
 }) {
   const [copied, setCopied] = useState<boolean>(false);
   const progress = calculateSprintProgress(sprint, tickets);
@@ -20,7 +22,7 @@ export default function SprintPointProgress({
   const message = `Completed ${progress.completedPoints} of ${progress.totalPoints} points | ${progress.percentCompleted}%`;
 
   const summary = [
-    sprint.name,
+    epicName || sprint.name,
     'Progress:',
     `- Total Points: ${progress.totalPoints}`,
     `- Completed Points: ${progress.completedPoints}`,

@@ -128,7 +128,7 @@ export default function SprintTicketReport({ sprint }: { sprint: Sprint }) {
                 </Box>
 
                 <Stack spacing="xs">
-                  <SprintPointProgress sprint={sprint} tickets={byEpic[key]} />
+                  <SprintPointProgress sprint={sprint} tickets={byEpic[key]} epicName={key} />
                   {byEpic[key].map((ticket) => (
                     <TicketStatusItem key={ticket.id} ticket={ticket} />
                   ))}
