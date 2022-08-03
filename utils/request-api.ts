@@ -1,6 +1,14 @@
 import { stringify } from 'querystring';
 import { requestHeaders } from 'utils/constants';
 
+export const getSprintDetailRequest = async (id): Promise<any> => {
+  const resp = await fetch(`/api/sprint/${id}`, {
+    method: 'GET',
+    headers: requestHeaders,
+  });
+  return resp.json();
+};
+
 export const createSprintRequest = async (data): Promise<any> => {
   const resp = await fetch('/api/sprint', {
     method: 'POST',

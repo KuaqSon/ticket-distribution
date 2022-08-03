@@ -26,5 +26,15 @@ export default async function handle(req, res) {
     return res.json(updateRecord);
   }
 
+  if (req.method === 'GET') {
+    const sprint = await prisma.sprint.findUnique({
+      where: {
+        id: String(sprintId),
+      },
+    });
+
+    return res.json(sprint);
+  }
+
   return res.status(405).json({ msg: 'Method not implemented' });
 }
