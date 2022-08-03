@@ -1,4 +1,4 @@
-import { Badge, Box, Center, Group, Loader, MantineTheme, Paper, Stack, Text } from '@mantine/core';
+import { Badge, Box, Group, MantineTheme, Paper, Stack, Text } from '@mantine/core';
 import { Sprint } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { getKeyByValue, stringToColor } from 'utils/helper';
@@ -11,6 +11,7 @@ import {
 import TicketStatusItem from 'components/SprintTicketReport/TicketStatusItem';
 import SprintPointProgress from 'components/SprintTicketReport/SprintPointProgress';
 import { TICKET_STATUS } from 'utils/constants';
+import SprintSkeleton from 'components/SprintSkeleton';
 
 const StatPaper = ({ label, value }) => (
   <Paper
@@ -73,11 +74,7 @@ export default function SprintTicketReport({ sprint }: { sprint: Sprint }) {
   const groupTicket = groupTicketByStatus(tickets);
 
   if (isLoading) {
-    return (
-      <Center>
-        <Loader />
-      </Center>
-    );
+    return <SprintSkeleton />;
   }
 
   return (

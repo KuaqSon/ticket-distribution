@@ -1,4 +1,4 @@
-import { Box, Button, Center, Group, Loader, MantineTheme, Paper, Stack } from '@mantine/core';
+import { Box, Button, Group, MantineTheme, Paper, Stack } from '@mantine/core';
 import { Sprint } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { slackUpMessage, ticketsByDay } from 'components/SprintTicketPlan/utils';
@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { CheckIcon, ClipboardCopyIcon } from '@modulz/radix-icons';
 import TicketBadge from 'components/TicketBadge';
 import TicketPriorityStatus from 'components/TicketPriorityStatus';
+import SprintSkeleton from 'components/SprintSkeleton';
 
 export default function SprintTicketPlan({ sprint }: { sprint: Sprint }) {
   const [copied, setCopied] = useState<boolean>(false);
@@ -38,9 +39,7 @@ export default function SprintTicketPlan({ sprint }: { sprint: Sprint }) {
 
   if (isLoading) {
     return (
-      <Center>
-        <Loader />
-      </Center>
+      <SprintSkeleton />
     );
   }
 

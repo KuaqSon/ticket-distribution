@@ -1,6 +1,7 @@
-import { Button, Center, Drawer, Group, Loader, Stack } from '@mantine/core';
+import { Button, Drawer, Group, Stack } from '@mantine/core';
 import { Sprint, Ticket } from '@prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import SprintSkeleton from 'components/SprintSkeleton';
 
 import TicketForm from 'components/TicketForm';
 import TicketItem from 'components/TicketItem';
@@ -94,11 +95,7 @@ export default function TicketManagement({ sprint }: { sprint: Sprint }) {
           </Button>
         </Group>
 
-        {isLoading && (
-          <Center>
-            <Loader size="lg" />
-          </Center>
-        )}
+        {isLoading && <SprintSkeleton />}
 
         {tickets?.map((t) => (
           <TicketItem

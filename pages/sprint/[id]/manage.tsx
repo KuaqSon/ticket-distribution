@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getSprintDetailRequest } from 'utils/request-api';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import SprintSkeleton from 'components/SprintSkeleton';
 
 const TicketManagement = dynamic(() => import('components/TicketManagement'), {
   suspense: true,
@@ -34,9 +35,7 @@ export default function SprintManagement(): JSX.Element {
 
       <Container py="lg">
         {loading ? (
-          <Center py="lg">
-            <Loader />
-          </Center>
+          <SprintSkeleton />
         ) : sprint ? (
           <>
             <Stack>
