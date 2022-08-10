@@ -11,7 +11,7 @@ export default async function handle(req, res) {
   }
 
   if (req.method === 'PUT') {
-    const { name, priority, storyPoint, status, epic } = req.body;
+    const { name, priority, storyPoint, status, epic, orderNumber } = req.body;
     const updateRecord = await prisma.ticket.update({
       where: { id: ticketId },
       data: {
@@ -20,6 +20,7 @@ export default async function handle(req, res) {
         storyPoint,
         status,
         epic,
+        orderNumber,
       },
     });
     return res.json(updateRecord);

@@ -11,6 +11,7 @@ const DEFAULT_TICKET = {
   storyPoint: 1,
   status: 'todo',
   epic: '',
+  orderNumber: 0,
 };
 
 const ticketStatusOptions = objectToOptions(TICKET_STATUS).map(({ label, value }) => ({
@@ -78,6 +79,13 @@ export default function TicketForm({
           />
 
           <StyledInput label="Epic" {...form.getInputProps('epic')} disabled={loading} />
+
+          <StyledInput
+            label="Order Number"
+            component={NumberInput}
+            {...form.getInputProps('orderNumber')}
+            disabled={loading}
+          />
 
           {/* <EpicAutocomplete
             defaultValue={form.values.epic}

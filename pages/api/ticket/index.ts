@@ -22,6 +22,9 @@ export default async function handle(req, res) {
       },
       orderBy: [
         {
+          orderNumber: 'desc',
+        },
+        {
           priority: 'desc',
         },
         {
@@ -36,7 +39,7 @@ export default async function handle(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { name, priority, storyPoint, status, epic, sprintId } = req.body;
+    const { name, priority, storyPoint, status, epic, sprintId, orderNumber } = req.body;
     const result = await prisma.ticket.create({
       data: {
         name,
@@ -44,6 +47,7 @@ export default async function handle(req, res) {
         storyPoint,
         status,
         epic,
+        orderNumber,
         sprint: { connect: { id: sprintId } },
         user: { connect: { email: session?.user?.email } },
       },

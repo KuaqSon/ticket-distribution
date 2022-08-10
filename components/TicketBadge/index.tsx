@@ -8,6 +8,9 @@ export default function TicketBadge({ ticket }: { ticket: Ticket }) {
 
   return (
     <Group spacing="xs">
+      <Badge color="dark" radius="sm" size="sm">
+        Order: {ticket.orderNumber}
+      </Badge>
       <Badge color="violet" radius="sm" size="sm">
         {status}
       </Badge>

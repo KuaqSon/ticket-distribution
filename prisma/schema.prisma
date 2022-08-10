@@ -79,14 +79,15 @@ model Sprint {
 }
 
 model Ticket {
-  id         String  @id @default(cuid())
-  userId     String
-  sprintId   String
-  name       String
-  priority   Float   @default(0)
-  storyPoint Float   @default(0)
-  status     String  @default("todo")
-  epic       String?
+  id          String  @id @default(cuid())
+  userId      String
+  sprintId    String
+  name        String
+  priority    Float   @default(0)
+  storyPoint  Float   @default(0)
+  status      String  @default("todo")
+  epic        String?
+  orderNumber Int     @default(0)
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
