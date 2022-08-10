@@ -36,7 +36,11 @@ export const stringToColor = (str: string): string => {
 
 export const sortTickets = (tickets: Ticket[]): Ticket[] => {
   const result: Ticket[] = [...tickets].sort((a, b) =>
-    a.priority === b.priority
+    a.orderNumber < b.orderNumber
+      ? 1
+      : a.orderNumber > b.orderNumber
+      ? -1
+      : a.priority === b.priority
       ? a.storyPoint < b.storyPoint
         ? -1
         : a.storyPoint > b.storyPoint
